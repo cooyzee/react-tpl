@@ -1,2 +1,2 @@
 # react-tpl
-Template for new React project.
+Template for new React projects.
