@@ -2,24 +2,16 @@
   "name": "react-tpl",
   "version": "1.0.0",
   "description": "Template for new React projects.",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "dev": "webpack serve",
     "build": "webpack"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cooyzee/react-tpl.git"
   },
   "keywords": [
     "react"
   ],
   "author": "Cooyzee",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cooyzee/react-tpl/issues"
-  },
-  "homepage": "https://github.com/cooyzee/react-tpl#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-react": "^7.17.12",

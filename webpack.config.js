@@ -1,27 +1,19 @@
 const path = require('path')
-// const shell = require('shelljs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
 
-const distDir = path.resolve('dist')
-
 module.exports = env => {
   const isDev = env.WEBPACK_SERVE || false
-  // if (isDev) {
-  //   shell.rm('-rf', distDir)
-  //   shell.mkdir('-p', distDir)
-  //   // shell.cp('-R', path.resolve('assets'), distDir)
-  // }
 
   return {
     mode: isDev ? 'development' : 'production',
     entry: `./src/main.js`,
     output: {
-      path: distDir,
-      filename: isDev ? '[name].js' : '[name].[chunkhash:8].js',
-      chunkFilename: isDev ? '[name].js' : '[name].[chunkhash:8].js'
+      path: path.resolve(__dirname, 'dist'),
+      filename: isDev ? '[name].js' : '[name].[contenthash:8].js',
+      clean: true
     },
     module: {
       rules:[
@@ -34,7 +26,7 @@ module.exports = env => {
               '@babel/preset-env',
               ['@babel/preset-react', {runtime: 'automatic'}]
             ],
-            plugins: [isDev && require.resolve('react-refresh/babel')].filter(Boolean)
+            plugins: [isDev && require('react-refresh/babel')].filter(Boolean)
           }
         },
         {
@@ -52,21 +44,29 @@ module.exports = env => {
       isDev && new ReactRefreshWebpackPlugin()
     ].filter(Boolean),
     optimization: {
+      moduleIds: 'deterministic',
+      // runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
-          commons: {test: /[\\/]node_modules[\\/]/, name: 'vendors', chunks: 'all'}
+          vendor: {test: /[\\/]node_modules[\\/]/, name: 'vendors', chunks: 'all'}
         },
       }
     },
     devServer: {
       host: 'localhost',
       port: 3000,
-      // respond to 404s with index.html
-      historyApiFallback: true,
+      // respond to 404s with home.html
+      // historyApiFallback: true,
+      // proxy: {
+      //   '/google': {
+      //     target: 'google.com',
+      //     changeOrigin: true
+      //   }
+      // },
       // open the browser
       open: true,
       // enable Hot Module Replacement without page refresh as a fallback in case of build failures
-      hot: 'only',
+      hot: 'only'
     }
   }
 }
