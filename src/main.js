@@ -1,10 +1,8 @@
 // Polyfill may be needed
 // map, set, object, promise (core-js)
-import React from 'react'
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import App from './app'
 
-render(
-  <App />,
-  document.getElementById('app')
-)
+ReactDOM
+  .createRoot(document.getElementById('root'))
+  .render(<App />)
